@@ -1,0 +1,79 @@
+```javascript
+// Sample data for the Huanghuali stock prices (from Ming to Modern times)
+const priceData = {
+  labels: ['Ming Dynasty', 'Qing Dynasty', '20th Century', '21st Century'],
+  datasets: [{
+    label: 'Huanghuali Price',
+    data: [100, 300, 500, 2000],
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    borderColor: 'rgba(255, 99, 132, 1)',
+    borderWidth: 1
+  }]
+};
+
+// Chart.js configuration for Price Chart
+const ctx = document.getElementById('priceChart').getContext('2d');
+const priceChart = new Chart(ctx, {
+  type: 'line',
+  data: priceData,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+// Buy and sell stock functions (simulated)
+let portfolio = {
+  'Huanghuali': {
+    quantity: 0,
+    currentPrice: 2000
+  }
+};
+
+function buyStock() {
+  const quantity = parseInt(document.getElementById('quantity').value);
+  portfolio['Huanghuali'].quantity += quantity;
+  updatePortfolio();
+}
+
+function sellStock() {
+  const quantity = parseInt(document.getElementById('quantity').value);
+  portfolio['Huanghuali'].quantity = Math.max(0, portfolio['Huanghuali'].quantity - quantity);
+  updatePortfolio();
+}
+
+function updatePortfolio() {
+  const totalValue = portfolio['Huanghuali'].quantity * portfolio['Huanghuali'].currentPrice;
+  const portfolioTable = document.getElementById('portfolioTable').getElementsByTagName('tbody')[0];
+  portfolioTable.innerHTML = `
+    <tr>
+      <td>Huanghuali</td>
+      <td>${portfolio['Huanghuali'].quantity}</td>
+      <td>${portfolio['Huanghuali'].currentPrice}</td>
+      <td>${totalValue}</td>
+    </tr>
+  `;
+}
+
+// Scroll to market section
+function scrollToMarket() {
+  document.getElementById('market').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Historical Chart Data
+const historicalCtx = document.getElementById('historicalChart').getContext('2d');
+const historicalChart = new Chart(historicalCtx, {
+  type: 'bar',
+  data: priceData,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+```
